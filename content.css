@@ -1,0 +1,37 @@
+/* Remove the fixed-height scroll constraint from the Address Reservation table.
+   The class is added by content.js; !important overrides the Vue-managed inline style. */
+.tplink-ar-enhanced .el-scrollbar__wrap {
+  max-height: none !important;
+}
+
+/* Hide the now-unnecessary scrollbar track inside the enhanced card. */
+.tplink-ar-enhanced .el-scrollbar__bar {
+  display: none !important;
+}
+
+/* Wrapper keeps the Copy button and format select inline, with a gap
+   matching the spacing between the existing Add button elements. */
+.tplink-copy-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 12px;
+}
+
+/* Style the format <select> to match the router UI's teal colour scheme.
+   We inherit font and size from the surrounding context. */
+.tplink-copy-select {
+  border: 1px solid rgb(74 203 214);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: inherit;
+  color: rgb(74 203 214);
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.tplink-copy-select:focus-visible {
+  outline: 2px solid rgb(74 203 214);
+  outline-offset: 1px;
+}

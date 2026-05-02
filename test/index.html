@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TP-Link Enhancer — Tests</title>
+  <style>
+    body { font-family: monospace; padding: 24px; background: #f9f9f9; }
+    h1 { font-size: 18px; margin-bottom: 16px; }
+    .summary { font-size: 16px; font-weight: bold; margin-bottom: 12px; }
+    .summary.pass { color: #1a7f37; }
+    .summary.fail { color: #cf222e; }
+    .test { padding: 3px 0; font-size: 13px; }
+    .test.pass { color: #1a7f37; }
+    .test.fail { color: #cf222e; }
+  </style>
+</head>
+<body>
+  <h1>TP-Link AX1500 Admin Enhancer — Test Suite</h1>
+  <div id="results"></div>
+
+  <!-- Implementation under test -->
+  <script src="../lib.js"></script>
+
+  <!-- Fixtures (define global HTML strings used by tests) -->
+  <script src="fixtures/table-rows.js"></script>
+
+  <!-- Test files (each wraps itself in an IIFE; they read from TestRunner) -->
+  <script src="helpers.js"></script>
+  <script src="detection.test.js"></script>
+  <script src="data-extraction.test.js"></script>
+  <script src="copy-format.test.js"></script>
+
+  <!-- Render results after all test scripts have run -->
+  <script>TestRunner.render();</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "TP-Link AX1500 Admin Enhancer",
+  "version": "0.1.0",
+  "description": "Enhances the TP-Link AX1500 router admin interface",
+  "content_scripts": [
+    {
+      "matches": ["*://*/webpages/index.html*"],
+      "js": ["lib.js", "content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}
