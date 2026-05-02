@@ -2,28 +2,6 @@ const COPY_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true
 
 const FORMAT_LABELS = { markdown: 'Markdown', csv: 'CSV', plain: 'Plain text' };
 
-// The CSS max-height:none !important approach fails because the parent .el-scrollbar
-// has overflow:hidden in the page stylesheet, clipping the expanded content.
-// Setting all three levels via style.setProperty with 'important' beats both the
-// page stylesheet and Vue's reactive inline-style updates.
-function fixScrollHeight(card) {
-  const sp = (el, prop, val) => el && el.style.setProperty(prop, val, 'important');
-
-  const scrollbar = card.querySelector('.su-table__body .el-scrollbar');
-  sp(scrollbar, 'overflow', 'visible');
-  sp(scrollbar, 'height', 'auto');
-
-  const wrap = card.querySelector('.su-table__body .el-scrollbar__wrap');
-  sp(wrap, 'max-height', 'none');
-  sp(wrap, 'overflow', 'visible');
-  sp(wrap, 'height', 'auto');
-
-  const view = card.querySelector('.su-table__body .el-scrollbar__view');
-  sp(view, 'display', 'block');
-  sp(view, 'height', 'auto');
-  sp(view, 'vertical-align', 'top');
-}
-
 // navigator.clipboard is undefined on plain HTTP (router admin pages are not HTTPS).
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -76,14 +54,13 @@ function injectCopyButton(card) {
   let feedbackTimeout = null;
 
   function showFeedback(label) {
-    // Lock the wrapper width before hiding children so the layout doesn't shift.
     wrapper.style.minWidth = wrapper.offsetWidth + 'px';
     btn.style.display = 'none';
     select.style.display = 'none';
 
     const fb = document.createElement('span');
     fb.className = 'tplink-copy-feedback';
-    fb.textContent = `✓ ${label} copied`;
+    fb.textContent = `✓ Copied ${label}`;
     wrapper.appendChild(fb);
 
     clearTimeout(feedbackTimeout);
@@ -111,6 +88,7 @@ function injectCopyButton(card) {
   btn.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') doCopy();
   });
+  select.addEventListener('change', doCopy);
 
   wrapper.appendChild(btn);
   wrapper.appendChild(select);
@@ -125,8 +103,6 @@ function injectCopyButton(card) {
 function enhance(card) {
   if (card.dataset.tplinkEnhanced) return;
   card.dataset.tplinkEnhanced = '1';
-  card.classList.add('tplink-ar-enhanced');
-  fixScrollHeight(card);
   injectCopyButton(card);
 }
 

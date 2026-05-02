@@ -1,11 +1,3 @@
-/* Scroll fix: belt-and-suspenders backup for the JS setProperty approach in content.js. */
-.tplink-ar-enhanced .el-scrollbar__wrap {
-  max-height: none !important;
-}
-.tplink-ar-enhanced .el-scrollbar__bar {
-  display: none !important;
-}
-
 /* Wrapper keeps the Copy button and format select inline, with a gap
    matching the spacing between the existing Add button elements. */
 .tplink-copy-wrapper {
@@ -15,8 +7,7 @@
   margin-right: 12px;
 }
 
-/* Style the format <select> to match the router UI's teal colour scheme.
-   We inherit font and size from the surrounding context. */
+/* Style the format <select> to match the router UI's teal colour scheme. */
 .tplink-copy-select {
   border: 1px solid rgb(74 203 214);
   border-radius: 4px;
