@@ -1,10 +1,7 @@
-/* Remove the fixed-height scroll constraint from the Address Reservation table.
-   The class is added by content.js; !important overrides the Vue-managed inline style. */
+/* Scroll fix: belt-and-suspenders backup for the JS setProperty approach in content.js. */
 .tplink-ar-enhanced .el-scrollbar__wrap {
   max-height: none !important;
 }
-
-/* Hide the now-unnecessary scrollbar track inside the enhanced card. */
 .tplink-ar-enhanced .el-scrollbar__bar {
   display: none !important;
 }
@@ -34,4 +31,11 @@
 .tplink-copy-select:focus-visible {
   outline: 2px solid rgb(74 203 214);
   outline-offset: 1px;
+}
+
+/* Replaces the button+select during the 2-second post-copy confirmation. */
+.tplink-copy-feedback {
+  color: rgb(74 203 214);
+  font-size: inherit;
+  white-space: nowrap;
 }
