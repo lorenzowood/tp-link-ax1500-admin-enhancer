@@ -54,9 +54,9 @@ content.css          Styles for the Copy As UI
 test/
   index.html         Test runner (open in browser)
   helpers.js         Minimal assert/describe/it framework
-  detection.test.js
-  data-extraction.test.js
-  copy-format.test.js
+  detection.test.js         findAddressReservationCard, findClientListCard
+  data-extraction.test.js   extractReservations, extractClients
+  copy-format.test.js       toMarkdown, toCsv, toPlainText, format
   fixtures/
     table-rows.js    HTML fixtures for DOM-based tests
 ```
