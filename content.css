@@ -24,6 +24,17 @@
   outline-offset: 1px;
 }
 
+/* Groups the Copy wrapper and Refresh button together on the right of a justify-between toolbar. */
+.tplink-copy-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tplink-copy-group .tplink-copy-wrapper {
+  margin-right: 0;
+}
+
 /* Replaces the button+select during the 2-second post-copy confirmation. */
 .tplink-copy-feedback {
   color: rgb(74 203 214);

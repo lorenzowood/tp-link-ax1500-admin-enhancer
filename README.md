@@ -8,7 +8,19 @@ A Chrome extension that enhances the admin interface of the TP-Link AX1500 route
 
 On the DHCP Server page (`Advanced → Network → DHCP Server`), a **Copy as** button and format selector appear above the Address Reservation table.
 
-- Click **Copy as** to copy the reservation list in the currently selected format.
+- Columns copied: Device Name, MAC Address, Reserved IP Address.
+
+### Copy DHCP client list
+
+On the same page, an equivalent **Copy as** button appears to the left of the Refresh button above the DHCP Client List table.
+
+- Columns copied: Device Name, MAC Address, Assigned IP Address, Lease Time.
+
+### Common behaviour
+
+Both buttons work the same way:
+
+- Click **Copy as** to copy the table in the currently selected format.
 - Changing the format dropdown also copies immediately — the chosen format is always already on the clipboard.
 - Formats: **Markdown** (pipe table), **CSV**, **Plain text** (space-aligned, monospace-friendly).
 - Brief confirmation ("✓ Copied Markdown" etc.) appears in place of the button for two seconds.

@@ -25,11 +25,11 @@ function copyText(text) {
   });
 }
 
-function injectCopyButton(card) {
-  const toolbar = card.querySelector('.flex.justify-end');
-  if (!toolbar || toolbar.querySelector('.tplink-copy-btn')) return;
-
-  const addBtn = toolbar.querySelector('[data-cy="addDeviceBtn"]');
+function injectCopyButton(card, { anchorSelector, extractFn, grouped }) {
+  const anchorBtn = card.querySelector(anchorSelector);
+  if (!anchorBtn) return;
+  const toolbar = anchorBtn.parentNode;
+  if (toolbar.querySelector('.tplink-copy-btn')) return;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'tplink-copy-wrapper';
@@ -76,8 +76,8 @@ function injectCopyButton(card) {
     if (btn.style.display === 'none') return; // already showing feedback
     const tableEl = card.querySelector('.su-table__body table');
     if (!tableEl) return;
-    const rows = TplinkEnhancer.extractReservations(tableEl);
-    const text = TplinkEnhancer.format(rows, select.value);
+    const { headers, rows } = extractFn(tableEl);
+    const text = TplinkEnhancer.format(headers, rows, select.value);
     const label = FORMAT_LABELS[select.value] || select.value;
     copyText(text)
       .then(() => showFeedback(label))
@@ -93,25 +93,47 @@ function injectCopyButton(card) {
   wrapper.appendChild(btn);
   wrapper.appendChild(select);
 
-  if (addBtn) {
-    toolbar.insertBefore(wrapper, addBtn);
+  if (grouped) {
+    const group = document.createElement('div');
+    group.className = 'tplink-copy-group';
+    toolbar.insertBefore(group, anchorBtn);
+    toolbar.removeChild(anchorBtn);
+    group.appendChild(wrapper);
+    group.appendChild(anchorBtn);
   } else {
-    toolbar.appendChild(wrapper);
+    toolbar.insertBefore(wrapper, anchorBtn);
   }
 }
 
 function enhance(card) {
   if (card.dataset.tplinkEnhanced) return;
   card.dataset.tplinkEnhanced = '1';
-  injectCopyButton(card);
+  injectCopyButton(card, {
+    anchorSelector: '[data-cy="addDeviceBtn"]',
+    extractFn: TplinkEnhancer.extractReservations,
+  });
+}
+
+function enhanceClientList(card) {
+  if (card.dataset.tplinkEnhanced) return;
+  card.dataset.tplinkEnhanced = '1';
+  injectCopyButton(card, {
+    anchorSelector: '[data-cy="refreshClientBtn"]',
+    extractFn: TplinkEnhancer.extractClients,
+    grouped: true,
+  });
 }
 
 const observer = new MutationObserver(() => {
-  const card = TplinkEnhancer.findAddressReservationCard();
-  if (card) enhance(card);
+  const ar = TplinkEnhancer.findAddressReservationCard();
+  if (ar) enhance(ar);
+  const cl = TplinkEnhancer.findClientListCard();
+  if (cl) enhanceClientList(cl);
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-const existingCard = TplinkEnhancer.findAddressReservationCard();
-if (existingCard) enhance(existingCard);
+const existingAr = TplinkEnhancer.findAddressReservationCard();
+if (existingAr) enhance(existingAr);
+const existingCl = TplinkEnhancer.findClientListCard();
+if (existingCl) enhanceClientList(existingCl);
